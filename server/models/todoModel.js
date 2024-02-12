@@ -11,6 +11,6 @@ const todoSchema = new Schema({
         required :[true,"description is required"]
     }
 })
+    const Todo = mongoose.model("Todo",todoSchema)
 
-
-module.exports = mongoose.model("Todo",todoSchema)
+module.exports = Todo;
