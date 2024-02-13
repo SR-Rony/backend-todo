@@ -3,9 +3,9 @@ const Todo = require("../models/todoModel")
 // get todo list
 const getTodo = async(req,res)=>{
     try{
-        const todoList = await Todo.find()
+        const todo = await Todo.find()
         res.status(200).send({
-            data:todoList
+            data:todo
         })
     }catch(error){
         req.status(500).send({message:error.message})
@@ -15,18 +15,17 @@ const getTodo = async(req,res)=>{
 // post todo list
 const postTodo = async(req,res)=>{
     try{
-      const {title,description}=req.body
-      const todo = new Todo({
-        title:title,
-        description:description
+      const {todo}=req.body
+      const newTodo = new Todo({
+        todo:todo
       })
     //   seve todo
-      await todo.save()
+      await newTodo.save()
       if(todo){
           res.status(201).send({
             success:true,
             message:'todo is added',
-            todo:todo
+            todo:newTodo
           })
       }else{
         res.status(404).send({
@@ -42,15 +41,14 @@ const postTodo = async(req,res)=>{
 // update todo list
 const updateTodo = async (req,res)=>{
     try{
-        const {title,description}= req.body;
+        const {todo}= req.body;
         const id = req.params.id
 
         const upTodo = await Todo.findByIdAndUpdate(
             {_id:id},
             {
                 $set:{
-                    title:title,
-                    description:description
+                    todo:todo
                 }
             },
             {new:true}
