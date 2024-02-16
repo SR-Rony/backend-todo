@@ -7,7 +7,7 @@ import ListItem from '../list/ListItem'
 
 const Todos = () => {
 
-    const [allTodos,setAllTodos]  =useState([])
+    const [allTodos,setAllTodos]=useState([])
 
     useEffect(()=>{
         const myTodo = async ()=>{
@@ -26,7 +26,7 @@ const Todos = () => {
             <input className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' type="text" name='title' placeholder='write todo ...' />
             <Button className='mt-5 ml-5' text="Add Todo"/>
         </form>
-        <List  className='mt-10 w-1/2 mx-auto border-t-4 py-5 border-b-4 border-secoundary'>
+        <List  className='mt-10 w-1/2 mx-auto '>
             {allTodos.map((item)=>(
                 <div key={item._id} className='flex justify-between items-center bg-transparent px-4 py-2 my-4 text-secoundary hover:text-white rounded-lg ring-2 ring-secoundary hover:bg-secoundary'>
                     <ListItem className='font-semibold text-2xl' text={item.todo} />
