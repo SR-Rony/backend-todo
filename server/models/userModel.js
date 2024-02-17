@@ -1,1 +1,31 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const {Schema} = mongoose;
+
+const userSchema = new Schema({
+    name:{
+        type: String,
+        required:[true,"user name is require"],
+    },
+    email:{
+        type: String,
+        required:true,
+        unique : true,
+        trim : true,
+        lowercase : true,
+        Validate : {
+            Validator : (v)=>{
+                return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(v);
+            },
+            message : "Please inter a balide email"
+        }
+    },
+    password:{
+        type: String,
+        required:true,
+        min: [6, 'Must be at least 6, got {VALUE}'],
+        set : (v)=>bcrypt.hashSync(v, bcrypt.genSaltSync(10))
+    }
+}) 
+
+module.exports = mongoose.model("Users",userSchema)

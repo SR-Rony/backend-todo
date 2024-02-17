@@ -11,7 +11,7 @@ const Todos = () => {
 
     useEffect(()=>{
         const myTodo = async ()=>{
-           let todos = await axios.get("http://localhost:8000/todos")
+           let todos = await axios.get("http://localhost:8000/api/todos")
           setAllTodos(todos.data.data)
         }
         myTodo()

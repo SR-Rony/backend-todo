@@ -8,7 +8,7 @@ app.use(express.json())
 
 app.use(cors())
 
-app.use(router)
+app.use("/api",router)
 
 
 app.get("/",(req,res)=>{

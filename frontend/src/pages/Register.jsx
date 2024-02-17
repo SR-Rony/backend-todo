@@ -1,9 +1,15 @@
 import React from 'react'
+import axios from 'axios';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Heading from '../components/heading/Heading';
 
-const onFinish = (values) => {
+const onFinish = async(values) => {
   console.log('Success:', values);
+  await axios.post("http://localhost:8000/api/users",{
+    name:values.name,
+    email:values.email,
+    password:values.password
+  })
 };
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
@@ -29,12 +35,12 @@ const Register = () => {
       autoComplete="off"
     >
       <Form.Item className=''
-        label="Username"
-        name="username"
+        label="name"
+        name="name"
         rules={[
           {
             required: true,
-            message: 'Please input your username!',
+            message: 'Please input your name!',
           },
         ]}
       >
@@ -55,7 +61,7 @@ const Register = () => {
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label="password"
         name="password"
         rules={[
           {
