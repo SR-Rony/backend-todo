@@ -1,5 +1,6 @@
 const app = require("./app");
-const { connectDB,PORT } = require("./secrict");
+const connectDB = require("./config/connectDB");
+const {PORT } = require("./secrict");
 
 
 

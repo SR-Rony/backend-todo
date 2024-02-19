@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
+import axios from 'axios';
 import Heading from '../components/heading/Heading';
 
-  const onFinish = (values) => {
+  const onFinish = async(values) => {
     console.log('Success:', values);
+    await axios.post("http://localhost:8000/api/login",{
+      email:values.email,
+      passsword:values.passsword
+    })
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
 const Login = () => {
+  useEffect(()=>{
+   async function user(){
+      const data= await axios.get("http://localhost:8000/api/login")
+      console.log(data);
+    }
+  },[])
+
+
   return (
   <div className=''>
     <Heading className='text-5xl mb-10' tag='h1' text="welcome to " span="Login"/>
