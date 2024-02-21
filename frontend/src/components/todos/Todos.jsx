@@ -29,10 +29,6 @@ const Todos = () => {
         await axios.post("http://localhost:8000/api/todos",{
             todo:inpValue
         })
-        .then(()=>{
-            setInpValue("")
-            console.log('input faca');
-        })
         
     }
 
