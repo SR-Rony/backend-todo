@@ -10,7 +10,11 @@ const onFinish = async(values) => {
     email:values.email,
     password:values.password
   })
-};
+  .then(()=>{
+    console.log('user create');
+  })
+}
+
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };

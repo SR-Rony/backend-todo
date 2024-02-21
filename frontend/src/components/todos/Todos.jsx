@@ -8,6 +8,7 @@ import ListItem from '../list/ListItem'
 const Todos = () => {
 
     const [allTodos,setAllTodos]=useState([])
+    const [inpValue,setInpValue]=useState("")
 
     useEffect(()=>{
         const myTodo = async ()=>{
@@ -15,24 +16,46 @@ const Todos = () => {
           setAllTodos(todos.data.data)
         }
         myTodo()
-    },[])
+    },[allTodos])
+
+    // handle input change
+    const handleChange =(e)=>{
+        setInpValue(e.target.value)
+        
+    }
+
+    // add todo button
+    const addTodo =async()=>{
+        await axios.post("http://localhost:8000/api/todos",{
+            todo:inpValue
+        })
+        .then(()=>{
+            setInpValue("")
+            console.log('input faca');
+        })
+        
+    }
+
+
+    // handle delete todo button
+    const handleDelete = async(item)=>{
+        await axios.delete(`http://localhost:8000/api/todos/${item._id}`)
+    }
 
 
 
   return (
     <div>
         <Heading className="text-5xl mb-10" tag="h1" text="Welcome to" span="Todo-List"/>
-        <form action="">
-            <input className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' type="text" name='title' placeholder='write todo ...' />
-            <Button className='mt-5 ml-5' text="Add Todo"/>
-        </form>
+            <input onChange={handleChange} className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' type="text" placeholder='write todo ...' />
+            <Button onClick={addTodo} className='mt-5 ml-5' text="Add Todo"/>
         <List  className='mt-10 w-1/2 mx-auto '>
             {allTodos.map((item)=>(
                 <div key={item._id} className='flex justify-between items-center bg-transparent px-4 py-2 my-4 text-secoundary hover:text-white rounded-lg ring-2 ring-secoundary hover:bg-secoundary'>
                     <ListItem className='font-semibold text-2xl' text={item.todo} />
                     <div>
                     <Button className="py-1" text='Edit'/>
-                    <Button className=" py-1 ring-2 ring-red-700 ml-5 text-red-700 hover:bg-red-700" text='Delete'/>
+                    <Button onClick={()=>handleDelete(item)} className=" py-1 ring-2 ring-red-700 ml-5 text-red-700 hover:bg-red-700" text='Delete'/>
                     </div>
                 </div>
             ))}
