@@ -4,6 +4,8 @@ import Heading from '../heading/Heading'
 import Button from '../button/Button'
 import List from '../list/List'
 import ListItem from '../list/ListItem'
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 
 const Todos = () => {
 
@@ -49,9 +51,11 @@ const Todos = () => {
             {allTodos.map((item)=>(
                 <div key={item._id} className='flex justify-between items-center bg-transparent px-4 py-2 my-4 text-secoundary hover:text-white rounded-lg ring-2 ring-secoundary hover:bg-secoundary'>
                     <ListItem className='font-semibold text-2xl' text={item.todo} />
-                    <div>
-                    <Button className="py-1" text='Edit'/>
-                    <Button onClick={()=>handleDelete(item)} className=" py-1 ring-2 ring-red-700 ml-5 text-red-700 hover:bg-red-700" text='Delete'/>
+                    <div className='flex gap-4 text-2xl'>
+                    {/* <Button className="py-1" text='Edit'/> */}
+                    {/* <Button onClick={()=>handleDelete(item)} className=" py-1 ring-2 ring-red-700 ml-5 text-red-700 hover:bg-red-700" text='Delete'/> */}
+                        <FaEdit className='text-green-700 cursor-pointer'/>
+                        <MdDelete onClick={()=>handleDelete(item)}  className='text-red-700 cursor-pointer'/>
                     </div>
                 </div>
             ))}
