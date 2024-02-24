@@ -2,25 +2,35 @@ import React from 'react'
 import axios from 'axios';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Heading from '../components/heading/Heading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const onFinish = async(values) => {
-  console.log('Success:', values);
-  await axios.post("http://localhost:8000/api/users",{
-    name:values.name,
-    email:values.email,
-    password:values.password
-  })
-  .then(()=>{
-    console.log('user create');
-  })
-}
 
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
 
 const Register = () => {
+
+  let navigate=useNavigate()
+
+  const onFinish = async(values) => {
+    console.log('Success:', values);
+    await axios.post("http://localhost:8000/api/users",{
+      name:values.name,
+      email:values.email,
+      password:values.password
+    })
+    .then(()=>{
+      navigate("/login")
+      console.log('navigate');
+    })
+    .then(()=>{
+      console.log('user create');
+    })
+  }
+  
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
+
+
   return (
    <div className=''>
     <Heading className='text-3xl mb-10' tag='h1' text="Get started with easily " span="register"/>

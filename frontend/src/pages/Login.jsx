@@ -2,7 +2,20 @@ import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import Heading from '../components/heading/Heading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+  
+
+const Login = () => {
+
+  let navigate = useNavigate()
+
+  // useEffect(()=>{
+  //  async function user(){
+  //     const data= await axios.get("http://localhost:8000/api/login")
+  //     console.log(data);
+  //   }
+  // },[])
 
   const onFinish = async(values) => {
     console.log('Success:', values);
@@ -10,18 +23,13 @@ import { Link } from 'react-router-dom';
       email:values.email,
       passsword:values.passsword
     })
+    .then(()=>{
+      navigate("/todos")
+    })
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
-const Login = () => {
-  useEffect(()=>{
-   async function user(){
-      const data= await axios.get("http://localhost:8000/api/login")
-      console.log(data);
-    }
-  },[])
 
 
   return (
