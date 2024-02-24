@@ -1,10 +1,21 @@
 const Users = require("../models/userModel")
 
 // get users
-const getUser = (req,res)=>{
+const getUser = async(req,res)=>{
     try{
 
-        res.status(200).send("i am get users")
+       const allUser = await Users.find();
+       if(allUser){
+        res.status(200).send({
+            success:true,
+            users:allUser
+        })
+       }else{
+        res.status(400).send({
+            success:false,
+            users:allUser
+        })
+       }
 
     }catch(err){
         res.status(404).send("error hear :",err)

@@ -28,11 +28,12 @@ const Todos = () => {
 
     // add todo button
     const handleAddTodo =async()=>{
-        await axios.post("http://localhost:8000/api/todos",{
-            todo:inpValue
-        })
+        // await axios.post("http://localhost:8000/api/todos",{
+        //     todo:inpValue
+        // })
         // .then(()=>{
-        //     setInpValue("")
+            console.log(inpValue);
+            setInpValue("")
         // })
         
     }
@@ -68,7 +69,7 @@ const Todos = () => {
   return (
     <div>
         <Heading className="text-5xl mb-10" tag="h1" text="Welcome to" span="Todo-List"/>
-            <input onChange={(e)=>setInpValue(e.target.value)} className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' type="text" placeholder='write todo ...' />
+            <input onChange={(e)=>setInpValue(e.target.value,console.log(inpValue))} className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' type="text" placeholder='write todo ...' />
             {addButton ?<Button onClick={handleAddTodo} className='mt-5 ml-5' text="Add Todo"/> : <Button onClick={handleUpdateTodo} className='mt-5 ml-5' text="Update"/>}
         <List  className='mt-10 w-1/2 mx-auto '>
 

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import Heading from '../components/heading/Heading';
+import { Link } from 'react-router-dom';
 
   const onFinish = async(values) => {
     console.log('Success:', values);
@@ -25,8 +26,8 @@ const Login = () => {
 
   return (
   <div className=''>
-    <Heading className='text-5xl mb-10' tag='h1' text="welcome to " span="Login"/>
-    <Form className='mx-auto w-1/2 pr-20'
+    <Heading className='text-3xl mb-10' tag='h1' text="Get started with easily " span="login"/>
+    <Form className='mx-auto w-1/2 pr-32'
       name="basic"
       labelCol={{
         span: 8,
@@ -78,6 +79,7 @@ const Login = () => {
         </Button>
       </Form.Item>
     </Form>
+    <p>Dont have an acount ? <Link className='text-primary' to='/'>Register</Link></p>
   </div>
   )
 }

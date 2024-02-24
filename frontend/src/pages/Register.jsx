@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Heading from '../components/heading/Heading';
+import { Link } from 'react-router-dom';
 
 const onFinish = async(values) => {
   console.log('Success:', values);
@@ -22,8 +23,8 @@ const onFinishFailed = (errorInfo) => {
 const Register = () => {
   return (
    <div className=''>
-    <Heading className='text-5xl mb-10' tag='h1' text="welcome to " span="Sing Up"/>
-    <Form className='mx-auto w-1/2 pr-20'
+    <Heading className='text-3xl mb-10' tag='h1' text="Get started with easily " span="register"/>
+    <Form className='mx-auto w-1/2 pr-32'
       name="basic"
       labelCol={{
         span: 8,
@@ -87,6 +88,7 @@ const Register = () => {
         </Button>
       </Form.Item>
     </Form>
+    <p>Already have an acount ? <Link className='text-primary' to='/login'>Login</Link></p>
   </div>
   )
 }

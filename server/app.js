@@ -1,14 +1,16 @@
 const express = require("express")
 const cors = require("cors")
 const app = express()
-const router = require("./routers/todoRouter")
+const todoRouter = require("./routers/todoRouter")
+const userRouter = require("./routers/userRouter")
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
 app.use(cors())
 
-app.use("/api",router)
+app.use("/api",userRouter)
+app.use("/api",todoRouter)
 
 
 app.get("/",(req,res)=>{
