@@ -6,7 +6,6 @@ import List from '../list/List'
 import ListItem from '../list/ListItem'
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import Paragraph from '../paragraph/Paragraph';
 
 const Todos = () => {
 
@@ -28,13 +27,13 @@ const Todos = () => {
 
     // add todo button
     const handleAddTodo =async()=>{
-        // await axios.post("http://localhost:8000/api/todos",{
-        //     todo:inpValue
-        // })
-        // .then(()=>{
+        await axios.post("http://localhost:8000/api/todos",{
+            todo:inpValue
+        })
+        .then(()=>{
             console.log(inpValue);
             setInpValue("")
-        // })
+        })
         
     }
     // update todo button

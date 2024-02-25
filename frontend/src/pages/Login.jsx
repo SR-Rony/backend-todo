@@ -61,6 +61,7 @@ const Login = () => {
             required: true,
             message: 'Please input your email!',
           },
+          {type:"email"}
         ]}
       >
         <Input />
@@ -74,6 +75,7 @@ const Login = () => {
             required: true,
             message: 'Please input your password!',
           },
+          {min:6}
         ]}
       >
         <Input.Password />

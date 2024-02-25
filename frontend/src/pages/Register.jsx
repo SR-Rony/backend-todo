@@ -59,6 +59,7 @@ const Register = () => {
             required: true,
             message: 'Please input your name!',
           },
+          {min:3}
         ]}
       >
         <Input />
@@ -72,6 +73,7 @@ const Register = () => {
             required: true,
             message: 'Please input your email!',
           },
+          {type:"email"}
         ]}
       >
         <Input />
@@ -85,6 +87,7 @@ const Register = () => {
             required: true,
             message: 'Please input your password!',
           },
+          {min:6}
         ]}
       >
         <Input.Password />
