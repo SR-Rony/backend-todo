@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import Heading from '../components/heading/Heading';
@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
   
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
 
   let navigate = useNavigate()
 
@@ -18,6 +19,7 @@ const Login = () => {
   // },[])
 
   const onFinish = async(values) => {
+    setLoading(true)
     console.log('Success:', values);
     await axios.post("http://localhost:8000/api/login",{
       email:values.email,
@@ -25,6 +27,7 @@ const Login = () => {
     })
     .then(()=>{
       navigate("/todos")
+      setLoading(false)
     })
   };
   const onFinishFailed = (errorInfo) => {
@@ -82,9 +85,10 @@ const Login = () => {
           span: 16,
         }}
       >
-        <Button className='bg-primary' type="primary" htmlType="submit">
-          Submit
-        </Button>
+        {loading 
+      ? <Button type="" className='bg-primary text-white' loading> Loading</Button>
+      : <Button className='bg-primary' type="primary" htmlType="submit"> Submit</Button>
+      }
       </Form.Item>
     </Form>
     <p>Dont have an acount ? <Link className='text-primary' to='/'>Register</Link></p>

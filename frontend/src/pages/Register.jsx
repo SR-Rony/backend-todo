@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Heading from '../components/heading/Heading';
@@ -7,23 +7,25 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
 
   let navigate=useNavigate()
 
   const onFinish = async(values) => {
     console.log('Success:', values);
+    setLoading(true)
+
     await axios.post("http://localhost:8000/api/users",{
-      name:values.name,
-      email:values.email,
-      password:values.password
+        name:values.name,
+        email:values.email,
+        password:values.password
+      })
+      .then(()=>{
+        navigate("/login")
+        setLoading(false)
     })
-    .then(()=>{
-      navigate("/login")
-      console.log('navigate');
-    })
-    .then(()=>{
-      console.log('user create');
-    })
+
+
   }
   
   const onFinishFailed = (errorInfo) => {
@@ -93,9 +95,12 @@ const Register = () => {
           span: 16,
         }}
       >
-        <Button className='bg-primary' type="primary" htmlType="submit">
-          Submit
-        </Button>
+      {loading 
+      ? <Button type="" className='bg-primary text-white' loading> Loading</Button>
+      : <Button className='bg-primary' type="primary" htmlType="submit"> Submit</Button>
+      }
+        
+        
       </Form.Item>
     </Form>
     <p>Already have an acount ? <Link className='text-primary' to='/login'>Login</Link></p>
