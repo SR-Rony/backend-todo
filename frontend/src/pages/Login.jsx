@@ -3,7 +3,8 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import Heading from '../components/heading/Heading';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
   
 
 const Login = () => {
@@ -11,27 +12,35 @@ const Login = () => {
 
   let navigate = useNavigate()
 
-  // useEffect(()=>{
-  //  async function user(){
-  //     const data= await axios.get("http://localhost:8000/api/login")
-  //     console.log(data);
-  //   }
-  // },[])
-
   const onFinish = async(values) => {
     setLoading(true)
-    console.log('Success:', values);
     await axios.post("http://localhost:8000/api/login",{
       email:values.email,
-      passsword:values.passsword
+      password:values.password
     })
     .then(()=>{
       navigate("/todos")
       setLoading(false)
     })
+    .catch((err)=>{
+      console.log(err);
+      let error=err.response.data.message
+      setLoading(false)
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    })
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
+    setLoading(false)
   };
 
 

@@ -73,7 +73,8 @@ const Register = () => {
             required: true,
             message: 'Please input your email!',
           },
-          {type:"email"}
+          {type:"email"},
+          
         ]}
       >
         <Input />
