@@ -15,7 +15,7 @@ const Register = () => {
     console.log('Success:', values);
     setLoading(true)
 
-    await axios.post("http://localhost:8000/api/users",{
+    await axios.post("http://localhost:8000/api/user/register",{
         name:values.name,
         email:values.email,
         password:values.password

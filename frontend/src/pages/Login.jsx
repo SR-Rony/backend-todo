@@ -14,7 +14,7 @@ const Login = () => {
 
   const onFinish = async(values) => {
     setLoading(true)
-    await axios.post("http://localhost:8000/api/login",{
+    await axios.post("http://localhost:8000/api/user/login",{
       email:values.email,
       password:values.password
     })
