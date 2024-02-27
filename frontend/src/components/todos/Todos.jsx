@@ -74,7 +74,7 @@ const Todos = () => {
 
             {allTodos.map((item)=>(
                 <div key={item._id} className='flex justify-between items-center bg-transparent px-4 py-2 my-4 text-secoundary hover:text-white rounded-lg ring-2 ring-secoundary hover:bg-secoundary'>
-                    <ListItem className='font-semibold text-2xl' text={item.todo} />
+                    <ListItem className='font-semibold text-xl' text={item.todo} />
                     <div className='flex gap-4 text-2xl items-center'>
                         <FaEdit onClick={()=>handleEdit(item)}  className='text-green-700 cursor-pointer'/>
                         <MdDelete onClick={()=>handleDelete(item)}  className='text-red-700 cursor-pointer'/>
