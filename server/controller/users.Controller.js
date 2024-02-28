@@ -51,7 +51,7 @@ const postUser = async(req,res)=>{
 
         
     }catch(err){
-        res.status(404).send("error hear :",err)
+        res.status(404).send({message:err.message})
     }
 }
 

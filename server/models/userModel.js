@@ -9,20 +9,20 @@ const userSchema = new Schema({
     },
     email:{
         type: String,
-        required:true,
-        unique : true,
+        required:[true,"email is required"],
+        unique : [true,"email already exsist"],
         trim : true,
         lowercase : true,
         Validate : {
             Validator : (v)=>{
                 return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(v);
             },
-            message : "Please inter a balide email"
+            message : "Please inter a valide email"
         }
     },
     password:{
         type: String,
-        required:true,
+        required:[true,"passwort is required"],
         min: [6, 'Must be at least 6, got {VALUE}'],
         set : (v)=>bcrypt.hashSync(v, bcrypt.genSaltSync(10))
     }

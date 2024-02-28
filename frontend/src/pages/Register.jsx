@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Heading from '../components/heading/Heading';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 
@@ -24,11 +25,28 @@ const Register = () => {
         navigate("/login")
         setLoading(false)
     })
+    .catch((err)=>{
+      setLoading(false)
+      let error = err.response.data.message;
+      if(error.includes("email")){
+        toast.error("email already exsisit", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }
+    })
 
 
   }
   
   const onFinishFailed = (errorInfo) => {
+    setLoading(false)
     console.log('Failed:', errorInfo);
   };
 
