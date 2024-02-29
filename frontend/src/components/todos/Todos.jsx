@@ -9,8 +9,8 @@ import { FaEdit } from "react-icons/fa";
 
 const Todos = () => {
 
-    const [allTodos,setAllTodos]=useState([])
     const [inpValue,setInpValue]=useState("")
+    const [allTodos,setAllTodos]=useState([])
     const [addButton,setAddButton]=useState(true)
     const [updateId,setUpdateId]=useState("")
     // const [loding,setLoding]=useState(false)
@@ -31,7 +31,7 @@ const Todos = () => {
             todo:inpValue
         })
         .then(()=>{
-            console.log(inpValue);
+            console.log("i am todo");
             setInpValue("")
         })
         
@@ -42,9 +42,9 @@ const Todos = () => {
         await axios.put(`http://localhost:8000/api/todos/${updateId}`,{
             todo:inpValue
         })
-        // .then(()=>{
-        //     setInpValue("")
-        // })
+        .then(()=>{
+            setInpValue("")
+        })
     }
 
     // handle edit todo button
@@ -68,7 +68,7 @@ const Todos = () => {
   return (
     <div>
         <Heading className="text-5xl mb-10" tag="h1" text="Welcome to" span="Todo-List"/>
-            <input onChange={(e)=>setInpValue(e.target.value,console.log(inpValue))} className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' type="text" placeholder='write todo ...' />
+            <input onChange={(e)=>setInpValue(e.target.value)} className='text-xl py-2 px-5 ring-2 ring-primary w-1/2 rounded-lg' value={inpValue} type="text" placeholder='write todo ...' />
             {addButton ?<Button onClick={handleAddTodo} className='mt-5 ml-5' text="Add Todo"/> : <Button onClick={handleUpdateTodo} className='mt-5 ml-5' text="Update"/>}
         <List  className='mt-10 w-1/2 mx-auto '>
 
