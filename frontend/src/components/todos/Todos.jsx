@@ -49,9 +49,8 @@ const Todos = () => {
 
     // handle edit todo button
     const handleEdit =(item)=>{
-        console.log(item.todo);
         setAddButton(false)
-        // setInpValue(item.todo)
+        setInpValue(item.todo)
         setUpdateId(item._id)
     } 
 

@@ -2,8 +2,16 @@ import React from 'react'
 import Heading from '../heading/Heading'
 import Paragraph from '../paragraph/Paragraph'
 import Button from '../button/Button'
+import { useSelector } from 'react-redux'
 
 const ActiveUser = () => {
+
+  const activeUser = useSelector((state)=>(state.user.value))
+
+    const handleLogout =()=>{
+      console.log('logout');
+    }
+
   return (
     <div className='bg-secoundary w-full h-[90vh] p-2 grid grid-rows-12 rounded-md '>
         <div className='row-span-10'>
@@ -14,7 +22,7 @@ const ActiveUser = () => {
             <Paragraph className="text-white text-2xl font-bold mb-5" text="User Name"/>
         </div>
         <div className='row-span-2'>
-            <Button text="Logout"/>
+            <Button onClick={handleLogout} text="Logout"/>
         </div>
     </div>
   )
