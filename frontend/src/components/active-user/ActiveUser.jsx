@@ -2,14 +2,19 @@ import React from 'react'
 import Heading from '../heading/Heading'
 import Paragraph from '../paragraph/Paragraph'
 import Button from '../button/Button'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { activeUser } from '../../fetures/users/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 const ActiveUser = () => {
 
-  const activeUser = useSelector((state)=>(state.user.value))
+  const user = useSelector((state)=>(state.user.value))
+  let dispatch = useDispatch()
+  let navigate = useNavigate()
 
     const handleLogout =()=>{
-      console.log('logout');
+      dispatch(activeUser(null))
+      navigate("/login")
     }
 
   return (
@@ -19,7 +24,7 @@ const ActiveUser = () => {
             <div className='ring ring-primary rounded-full w-28 h-28 mx-auto my-4'>
 
             </div>
-            <Paragraph className="text-white text-2xl font-bold mb-5" text="User Name"/>
+            <Paragraph className="text-white text-2xl font-bold mb-5" text={user.name}/>
         </div>
         <div className='row-span-2'>
             <Button onClick={handleLogout} text="Logout"/>

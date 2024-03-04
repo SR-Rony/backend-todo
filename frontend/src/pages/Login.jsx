@@ -4,12 +4,28 @@ import axios from 'axios';
 import Heading from '../components/heading/Heading';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { activeUser } from '../fetures/users/userSlice'
+import { useDispatch, useSelector } from 'react-redux';
   
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
 
+  // const user = useSelector((state)=>(state.user.value))
+  // console.log(user);
   let navigate = useNavigate()
+  let dispatch = useDispatch()
+
+  const [users,setUsers]=useState([])
+
+    useEffect(()=>{
+        const usersFun=async()=>{
+            const allUser = await axios.get("http://localhost:8000/api/user")
+            let users =allUser.data.users
+            setUsers(users)
+        }
+        usersFun()
+    },[])
 
   const onFinish = async(values) => {
     setLoading(true)
@@ -18,8 +34,19 @@ const Login = () => {
       password:values.password
     })
     .then(()=>{
-      navigate("/todos")
-      setLoading(false)
+      users.map((item)=>{
+        if(item.email==values.email){
+          let user={
+            name:item.name,
+            email:item.email,
+            password:item.password
+          }
+          dispatch(activeUser(user))
+          navigate("/todos")
+          setLoading(false)
+        }
+      })
+      
     })
     .catch((err)=>{
       console.log(err);
