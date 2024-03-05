@@ -13,6 +13,7 @@ const ActiveUser = () => {
   let navigate = useNavigate()
 
     const handleLogout =()=>{
+      localStorage.removeItem('user')
       dispatch(activeUser(null))
       navigate("/login")
     }

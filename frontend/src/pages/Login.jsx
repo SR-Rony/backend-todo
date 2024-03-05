@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import Heading from '../components/heading/Heading';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, json, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { activeUser } from '../fetures/users/userSlice'
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Login = () => {
   const [loading, setLoading] = useState(false);
 
-  // const user = useSelector((state)=>(state.user.value))
+  const user = useSelector((state)=>(state.user.value))
   // console.log(user);
   let navigate = useNavigate()
   let dispatch = useDispatch()
@@ -19,6 +19,10 @@ const Login = () => {
   const [users,setUsers]=useState([])
 
     useEffect(()=>{
+      if(user){
+        navigate("/todos")
+      }
+
         const usersFun=async()=>{
             const allUser = await axios.get("http://localhost:8000/api/user")
             let users =allUser.data.users
@@ -42,6 +46,7 @@ const Login = () => {
             password:item.password
           }
           dispatch(activeUser(user))
+          localStorage.setItem("user",JSON.stringify(user))
           navigate("/todos")
           setLoading(false)
         }

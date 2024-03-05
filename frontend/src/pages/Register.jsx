@@ -1,16 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Heading from '../components/heading/Heading';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
-
+  const user = useSelector((state)=>(state.user.value))
   let navigate=useNavigate()
+
+  useEffect(()=>{
+    if(user){
+      navigate("/todos")
+    }
+  },[])
 
   const onFinish = async(values) => {
     console.log('Success:', values);
