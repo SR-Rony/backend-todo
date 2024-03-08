@@ -1,5 +1,8 @@
+const createJsonWebToken = require("../helper/jsonWebToken");
 const Users = require("../models/userModel")
 const bcrypt = require('bcrypt');
+const { jwtSecrictKey } = require("../secrict");
+const emailNodmailer = require("../helper/email");
 const saltRounds = 10;
 
 // get users
@@ -34,14 +37,38 @@ const postUser = async(req,res)=>{
             email:email,
             password:password
         })
+
+        // create jsonwebtoken
+      let token = createJsonWebToken({
+            name:name,
+            email:email,
+            password:password
+            },
+            jwtSecrictKey,
+            "10m"
+        )
+
+        const emailData={
+            name:name,
+            email:email,
+            subject:"action activation email",
+            html:`
+                <h1>Hello ${name}</h1>
+                <p>please click hear to <a href=" http://localhost:5173/ ${token}">active your email</a></p>
+            `
+        }
+
+        await emailNodmailer(emailData)
+
         await newUser.save()
 
         if(newUser){
             res.status(200).send({
                 success:true,
                 message:"new user is create",
-                data : newUser
+                data:newUser
             })
+            console.log(token);
         }else{
             res.status(500).send({
                 success:false,
