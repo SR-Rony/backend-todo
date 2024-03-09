@@ -28,15 +28,29 @@ const Register = () => {
         email:values.email,
         password:values.password
       })
-      .then(()=>{
+      .then((res)=>{
+        let message = res.data.message
+        if(message){
+          toast.success("please chack your email and verify", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        }
         navigate("/login")
         setLoading(false)
     })
     .catch((err)=>{
       setLoading(false)
-      let error = err.response.data.message;
-      if(error.includes("email")){
-        toast.error("email already exsisit", {
+      console.log(err);
+      let existsEmail = err.response.data.messages;
+      if(existsEmail){
+        toast.error(existsEmail, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

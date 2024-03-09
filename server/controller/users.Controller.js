@@ -1,6 +1,9 @@
 const createJsonWebToken = require("../helper/jsonWebToken");
 const Users = require("../models/userModel")
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken")
+
+
 const { jwtSecrictKey } = require("../secrict");
 const emailNodmailer = require("../helper/email");
 const saltRounds = 10;
@@ -32,11 +35,22 @@ const postUser = async(req,res)=>{
     try{
         const {name,email,password}=req.body
 
-        const newUser = new Users({
-            name:name,
-            email:email,
-            password:password
-        })
+        // const newUser = new Users({
+        //     name:name,
+        //     email:email,
+        //     password:password
+        // })
+
+        // exists user email chack
+        const userExists = await Users.exists({email:email})
+
+        if(userExists){
+            return res.status(401).send({
+                success:false,
+                messages:"user already exisis"
+            })
+            
+        }
 
         // create jsonwebtoken
       let token = createJsonWebToken({
@@ -48,6 +62,8 @@ const postUser = async(req,res)=>{
             "10m"
         )
 
+        console.log("token :",token);
+
         const emailData={
             name:name,
             email:email,
@@ -57,25 +73,56 @@ const postUser = async(req,res)=>{
                 <p>please click hear to <a href=" http://localhost:5173/ ${token}">active your email</a></p>
             `
         }
+        // user verification email send
+       let mailSend = await emailNodmailer(emailData)
+       if(mailSend){
+        res.status(200).send({
+            success:true,
+            message:"user email send"
+        })
+       }else{
+        res.status(200).send({
+            success:false,
+            message:"email not send"
+        })
+       }
+        
+    }catch(err){
+        res.status(404).send({message:err.message})
+    }
+}
 
-        await emailNodmailer(emailData)
-
-        await newUser.save()
-
-        if(newUser){
-            res.status(200).send({
-                success:true,
-                message:"new user is create",
-                data:newUser
-            })
-            console.log(token);
-        }else{
-            res.status(500).send({
+// verify user
+const verifyUser = async(req,res)=>{
+    try{
+        const token = req.body.token
+        // token error throw
+        if(!token){
+            throw new Error("token is not found")
+        }
+        // user decoded data
+        let decoded = jwt.verify(token,jwtSecrictKey)
+        // decoded error throw
+        if(!decoded){
+            throw new Error('user is not verify')
+        }
+        // user exists chack
+        const userExists = await Users.exists({email:decoded.email})
+        // user email exists error 
+        if(userExists){
+            res.status(404).send({
                 success:false,
-                message:"new user is not create",
+                messages:"user already exisis"
             })
         }
+        // new user create
+        await Users.create(decoded)
 
+        // user create successfull messages
+        res.status(2001).send({
+            success:true,
+            message:'user was register successfully'
+        })
         
     }catch(err){
         res.status(404).send({message:err.message})
@@ -109,4 +156,4 @@ const postLogin =async(req,res)=>{
     }
 }
 
-module.exports = {getUser,postUser,postLogin}
+module.exports = {getUser,postUser,postLogin,verifyUser}

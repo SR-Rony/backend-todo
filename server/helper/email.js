@@ -21,6 +21,7 @@ const emailNodmailer = async(emailData)=>{
         }
         let info = await transporter.sendMail(mailOption);
         console.log('email send :',info.response);
+        return info
     }catch(error){
         console.error("error occured while sending email :",error);
         throw error
