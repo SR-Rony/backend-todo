@@ -50,7 +50,7 @@ const Register = () => {
       console.log(err);
       let existsEmail = err.response.data.messages;
       if(existsEmail){
-        toast.error(existsEmail, {
+        toast.error("email already exists", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

@@ -35,12 +35,6 @@ const postUser = async(req,res)=>{
     try{
         const {name,email,password}=req.body
 
-        // const newUser = new Users({
-        //     name:name,
-        //     email:email,
-        //     password:password
-        // })
-
         // exists user email chack
         const userExists = await Users.exists({email:email})
 
@@ -70,7 +64,7 @@ const postUser = async(req,res)=>{
             subject:"action activation email",
             html:`
                 <h1>Hello ${name}</h1>
-                <p>please click hear to <a href=" http://localhost:5173/ ${token}">active your email</a></p>
+                <p>please click hear to <a href=" http://localhost:8000/api/user/verify${token}">active your email</a></p>
             `
         }
         // user verification email send
