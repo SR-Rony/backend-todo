@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Verification from './pages/Verification';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/' element={<Register />}/>
         <Route path='/login' element={<Login />}/>
         <Route path='/todos' element={<Home />}/>
+        <Route path='/verification/:token' element={<Verification />}/>
       </Route>
     )
   );

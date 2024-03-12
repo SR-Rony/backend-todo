@@ -33,7 +33,7 @@ const getUser = async(req,res)=>{
 // post users
 const postUser = async(req,res)=>{
     try{
-        const {name,email,password}=req.body
+        const {name,email,password,images}=req.body
 
         // exists user email chack
         const userExists = await Users.exists({email:email})
@@ -50,7 +50,8 @@ const postUser = async(req,res)=>{
       let token = createJsonWebToken({
             name:name,
             email:email,
-            password:password
+            password:password,
+            images:images
             },
             jwtSecrictKey,
             "10m"
@@ -64,7 +65,7 @@ const postUser = async(req,res)=>{
             subject:"action activation email",
             html:`
                 <h1>Hello ${name}</h1>
-                <p>please click hear to <a href=" http://localhost:8000/api/user/verify${token}">active your email</a></p>
+                <p>please click hear to <a href="http://localhost:5173/verification/${token}">active your email</a></p>
             `
         }
         // user verification email send
@@ -104,16 +105,18 @@ const verifyUser = async(req,res)=>{
         const userExists = await Users.exists({email:decoded.email})
         // user email exists error 
         if(userExists){
-            res.status(404).send({
+            console.log("exists error");
+          return  res.status(500).send({
                 success:false,
                 messages:"user already exisis"
             })
+
         }
         // new user create
         await Users.create(decoded)
 
         // user create successfull messages
-        res.status(2001).send({
+        res.status(201).send({
             success:true,
             message:'user was register successfully'
         })
