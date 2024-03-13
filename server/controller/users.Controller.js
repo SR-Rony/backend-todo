@@ -108,7 +108,7 @@ const verifyUser = async(req,res)=>{
             console.log("exists error");
           return  res.status(500).send({
                 success:false,
-                messages:"user already exisis"
+                message:"user already exisis"
             })
 
         }

@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get("/",getUser)
 // register
-router.post("/register",upload.single("image") ,postUser)
+router.post("/register",upload.single("images") ,postUser)
 // verify user
 router.post("/verify",verifyUser)
 // login user

@@ -54,7 +54,6 @@ const Login = () => {
       
     })
     .catch((err)=>{
-      console.log(err);
       let error=err.response.data.message
       setLoading(false)
       toast.error(error, {

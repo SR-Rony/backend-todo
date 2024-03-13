@@ -18,19 +18,19 @@ const Verification = () => {
             token:token
         }).then((res)=>{
             console.log(res);
-            setTimeout(()=>{
-                navigate("/login")
-            },2000)
-        }).catch((error)=>{
-            // console.log(error.response.data.messages);
+            navigate("/login")
+        }).catch(async(error)=>{
+            console.log("main error",error.response.data.messages);
             let errorMessages = error.response.data.message;
 
-            if(errorMessages.includes("user already exisis")){
-                setError("already verify")
+            if(errorMessages.includes ("user already exisis")){
+                console.log("user already exisis");
+               return setError("already verify")
             }
 
             if(errorMessages.includes("expired")){
                 setError("expired")
+                console.log("expired error ");
             }
         })
         }

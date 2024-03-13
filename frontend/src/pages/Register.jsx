@@ -21,7 +21,7 @@ const Register = () => {
   },[])
 
   const onFinish = async(values) => {
-    console.log('Success:', values);
+    console.log('Success:', values.images);
     setLoading(true)
 
     await axios.post("http://localhost:8000/api/user/register",{
