@@ -6,7 +6,6 @@ import { Link, json, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { activeUser } from '../fetures/users/userSlice'
 import { useDispatch, useSelector } from 'react-redux';
-import Paragraph from '../components/paragraph/Paragraph';
   
 
 const Login = () => {
@@ -121,7 +120,7 @@ const Login = () => {
         <Input.Password />
       </Form.Item>
 
-      <Paragraph onClick={()=>navigate("/forgot_password")} className='text-end text-primary cursor-pointer mb-2'>Forget passeord</Paragraph>
+      <p onClick={()=>navigate("/forgot_password")} className='text-end text-primary cursor-pointer mb-2'>Forget passeord</p>
 
       <Form.Item
         wrapperCol={{

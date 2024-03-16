@@ -76,7 +76,7 @@ const postUser = async(req,res)=>{
             message:"user email send"
         })
        }else{
-        res.status(200).send({
+        res.status(500).send({
             success:false,
             message:"email not send"
         })
@@ -153,4 +153,59 @@ const postLogin =async(req,res)=>{
     }
 }
 
-module.exports = {getUser,postUser,postLogin,verifyUser}
+// forgot password
+const forgotPassword =async(req,res)=>{
+    try{
+        let email = req.body.email;
+
+        let userEmail = await Users.findOne({email:email})
+        if(!userEmail){
+          return res.status(500).send({
+                success:false,
+                message:"Invalid email"
+            })
+        }
+        
+        const emailData={
+            email:email,
+            subject:"reset your password",
+            html:`
+                <h1>for your email ${email}</h1>
+                <p>please click hear to <a href="http://localhost:5173/newpassword">set new password</a></p>
+            `
+        }
+      let sendEmail = await emailNodmailer(emailData)
+      if(sendEmail){
+        res.status(200).send({
+            success:true,
+            message:"user email send",
+            email:email
+        })
+      }else{
+        res.status(500).send({
+            success:false,
+            message:"email not send",
+        })
+      }
+        
+        // const user = await Users.findOneAndUpdate({email:email},)
+        // if(user){
+        //     bcrypt.compare(password, user.password, (err, result)=>{
+        //         if(result===true){
+        //             res.status(200).send("user is valid ")
+        //             console.log('valid user');
+        //         }else{
+        //             res.status(400).send({message:"invalid password"})
+        //         }
+        //     })
+            
+        // }else{
+        //     res.status(404).send({message:"invalid email"})
+        // }
+
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+module.exports = {getUser,postUser,postLogin,verifyUser,forgotPassword}

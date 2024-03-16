@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
+import axios from "axios"
+import { toast } from 'react-toastify';
 
 
 const ForgotPassword = () => {
@@ -9,41 +11,37 @@ const ForgotPassword = () => {
     const onFinish = async(values) => {
         console.log(values);
         // setLoading(true)
-        // await axios.post("http://localhost:8000/api/user/login",{
-        //   email:values.email,
-        //   password:values.password
-        // })
-        // .then(()=>{
-        //   users.map((item)=>{
-        //     if(item.email==values.email){
-        //       let user={
-        //         name:item.name,
-        //         email:item.email,
-        //         password:item.password
-        //       }
-        //       dispatch(activeUser(user))
-        //       localStorage.setItem("user",JSON.stringify(user))
-        //       navigate("/todos")
-        //       setLoading(false)
-        //     }
-        //   })
-          
-        // })
-        // .catch((err)=>{
-        //   let error=err.response.data.message
-        //   setLoading(false)
-        //   toast.error(error, {
-        //     position: "top-right",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "dark",
-        //     });
-        // })
-      };
+        await axios.post("http://localhost:8000/api/user/forgot_password",{
+          email:values.email,
+        })
+        .then((res)=>{
+          console.log(res);
+          toast.success("please chack your email and add the new password", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        })
+        .catch((err)=>{
+          console.log(err.response.data.message);
+          let errorMessage=err.response.data.message
+          toast.error(errorMessage, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+        })
+      }
       const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
         // setLoading(false)
