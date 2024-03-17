@@ -2,21 +2,26 @@ import React, { useState } from 'react'
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios"
 import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-const ForgotPassword = () => {
+const NewPassword = () => {
     const [loading, setLoading] = useState(false);
+
+    const params = useParams()
+    const navigate = useNavigate()
 
 
     const onFinish = async(values) => {
-        console.log(values);
-        // setLoading(true)
-        await axios.post("http://localhost:8000/api/user/forgot_password",{
-          email:values.email,
+        // console.log(values);
+        setLoading(true)
+        await axios.post("http://localhost:8000/api/user/update_password",{
+          password:values.password,
+          token:params.token
         })
         .then((res)=>{
-          console.log(res);
-          toast.success("please chack your email and add the new password", {
+            setLoading(false)
+          toast.success(res.data.message, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -25,20 +30,23 @@ const ForgotPassword = () => {
             draggable: true,
             progress: undefined,
             theme: "dark",
-            });
+          });
+
+        })
+        .then(()=>{
+            navigate("/login")
         })
         .catch((err)=>{
-          console.log(err);
-          let errorMessage=err.response.data.message
-          toast.error(errorMessage, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+            setLoading(false)
+            toast.error ("password reset expired",{
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
             });
         })
       }
@@ -67,18 +75,18 @@ const ForgotPassword = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
-        label="inter your email"
-        name="email"
+       <Form.Item
+        label="password"
+        name="password"
         rules={[
           {
             required: true,
-            message: 'Please input your email!',
+            message: 'Please input your password!',
           },
-          {type:"email"}
+          {min:6}
         ]}
       >
-        <Input />
+        <Input.Password />
       </Form.Item>
 
       <Form.Item
@@ -97,4 +105,4 @@ const ForgotPassword = () => {
   )
 }
 
-export default ForgotPassword
+export default NewPassword

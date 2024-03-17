@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verification from './pages/Verification';
 import ForgotPassword from './pages/ForgotPassword';
+import NewPassword from './pages/NewPassword';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path='/todos' element={<Home />}/>
         <Route path='/forgot_password' element={<ForgotPassword />}/>
         <Route path='/verification/:token' element={<Verification />}/>
+        <Route path='/newpassword/:token' element={<NewPassword />}/>
       </Route>
     )
   );

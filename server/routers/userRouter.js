@@ -1,5 +1,5 @@
 const express = require("express")
-const { getUser, postUser, postLogin, verifyUser, forgotPassword } = require("../controller/users.Controller")
+const { getUser, postUser, postLogin, verifyUser, forgotPassword, newPassword } = require("../controller/users.Controller")
 const upload = require("../middlewares/fileUplod")
 const router = express.Router()
 
@@ -12,5 +12,7 @@ router.post("/verify",verifyUser)
 router.post("/login",postLogin)
 // forgot password
 router.post("/forgot_password",forgotPassword)
+// update user password
+router.post("/update_password",newPassword)
 
 module.exports = router

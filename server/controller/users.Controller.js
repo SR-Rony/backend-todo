@@ -165,13 +165,25 @@ const forgotPassword =async(req,res)=>{
                 message:"Invalid email"
             })
         }
+
+        // console.log(userEmail);
+        // user forgot password token create
+        let token = createJsonWebToken({
+            name:userEmail.name,
+            email:userEmail.email,
+            password:userEmail.password,
+            images:userEmail.images
+            },
+            jwtSecrictKey,
+            "10m"
+        )
         
         const emailData={
             email:email,
             subject:"reset your password",
             html:`
                 <h1>for your email ${email}</h1>
-                <p>please click hear to <a href="http://localhost:5173/newpassword">set new password</a></p>
+                <p>please click hear to <a href="http://localhost:5173/newpassword/${token}">set new password</a></p>
             `
         }
       let sendEmail = await emailNodmailer(emailData)
@@ -208,4 +220,53 @@ const forgotPassword =async(req,res)=>{
     }
 }
 
-module.exports = {getUser,postUser,postLogin,verifyUser,forgotPassword}
+// user new password set
+const newPassword =async(req,res)=>{
+    try{
+        let upPassword = req.body.password;
+        let token = req.body.token;
+        if(!token){
+          return res.status(500).send({
+                success:false,
+                message:"token not found"
+            })
+        }
+
+        const decoded = jwt.verify(token,jwtSecrictKey)
+
+        const updatePassword = await Users.findOneAndUpdate({email:decoded.email},{$set:{password:upPassword}},{new:true});
+
+      if(updatePassword){
+        res.status(200).send({
+            success:true,
+            message:"user password is update",
+            password:updatePassword
+        })
+      }else{
+        res.status(500).send({
+            success:false,
+            message:"password not update",
+        })
+      }
+        
+        // const user = await Users.findOneAndUpdate({email:email},)
+        // if(user){
+        //     bcrypt.compare(password, user.password, (err, result)=>{
+        //         if(result===true){
+        //             res.status(200).send("user is valid ")
+        //             console.log('valid user');
+        //         }else{
+        //             res.status(400).send({message:"invalid password"})
+        //         }
+        //     })
+            
+        // }else{
+        //     res.status(404).send({message:"invalid email"})
+        // }
+
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}
+
+module.exports = {getUser,postUser,postLogin,verifyUser,forgotPassword,newPassword}
