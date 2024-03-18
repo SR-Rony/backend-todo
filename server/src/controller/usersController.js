@@ -199,21 +199,6 @@ const forgotPassword =async(req,res)=>{
             message:"email not send",
         })
       }
-        
-        // const user = await Users.findOneAndUpdate({email:email},)
-        // if(user){
-        //     bcrypt.compare(password, user.password, (err, result)=>{
-        //         if(result===true){
-        //             res.status(200).send("user is valid ")
-        //             console.log('valid user');
-        //         }else{
-        //             res.status(400).send({message:"invalid password"})
-        //         }
-        //     })
-            
-        // }else{
-        //     res.status(404).send({message:"invalid email"})
-        // }
 
     }catch(err){
         res.status(500).send(err.message)
@@ -248,21 +233,6 @@ const newPassword =async(req,res)=>{
             message:"password not update",
         })
       }
-        
-        // const user = await Users.findOneAndUpdate({email:email},)
-        // if(user){
-        //     bcrypt.compare(password, user.password, (err, result)=>{
-        //         if(result===true){
-        //             res.status(200).send("user is valid ")
-        //             console.log('valid user');
-        //         }else{
-        //             res.status(400).send({message:"invalid password"})
-        //         }
-        //     })
-            
-        // }else{
-        //     res.status(404).send({message:"invalid email"})
-        // }
 
     }catch(err){
         res.status(500).send(err.message)
