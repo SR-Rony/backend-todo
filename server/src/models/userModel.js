@@ -26,10 +26,10 @@ const userSchema = new Schema({
         min: [6, 'Must be at least 6, got {VALUE}'],
         set : (v)=>bcrypt.hashSync(v, bcrypt.genSaltSync(10))
     },
-    images:{
-        type: String,
-        default:true
-    }
+    // images:{
+    //     type: String,
+    //     default:true
+    // }
 }) 
 
 module.exports = mongoose.model("Users",userSchema)

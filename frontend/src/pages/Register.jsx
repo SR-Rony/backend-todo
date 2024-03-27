@@ -21,14 +21,14 @@ const Register = () => {
   },[])
 
   const onFinish = async(values) => {
-    console.log('Success:', values.images);
+    // console.log('Success:', values.images);
     setLoading(true)
 
     await axios.post("http://localhost:8000/api/user/register",{
         name:values.name,
         email:values.email,
         password:values.password,
-        images:values.images
+        // images:values.images
       })
       .then((res)=>{
         let message = res.data.message
@@ -133,15 +133,6 @@ const Register = () => {
         ]}
       >
         <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        label="images"
-        name="images"
-        rules={[
-        ]}
-      >
-        <Input type='file'/>
       </Form.Item>
 
       <Form.Item

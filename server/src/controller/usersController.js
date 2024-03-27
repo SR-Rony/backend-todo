@@ -33,7 +33,7 @@ const getUser = async(req,res)=>{
 // post users
 const postUser = async(req,res)=>{
     try{
-        const {name,email,password,images}=req.body
+        const {name,email,password}=req.body
 
         // exists user email chack
         const userExists = await Users.exists({email:email})
@@ -51,7 +51,7 @@ const postUser = async(req,res)=>{
             name:name,
             email:email,
             password:password,
-            images:images
+            // images:images
             },
             jwtSecrictKey,
             "10m"
@@ -165,14 +165,12 @@ const forgotPassword =async(req,res)=>{
                 message:"Invalid email"
             })
         }
-
-        // console.log(userEmail);
         // user forgot password token create
         let token = createJsonWebToken({
             name:userEmail.name,
             email:userEmail.email,
             password:userEmail.password,
-            images:userEmail.images
+            // images:userEmail.images
             },
             jwtSecrictKey,
             "10m"
@@ -201,7 +199,7 @@ const forgotPassword =async(req,res)=>{
       }
 
     }catch(err){
-        res.status(500).send(err.message)
+        res.status(500).send(err)
     }
 }
 

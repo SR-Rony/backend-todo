@@ -10,11 +10,12 @@ const ForgotPassword = () => {
 
     const onFinish = async(values) => {
         console.log(values);
-        // setLoading(true)
+        setLoading(true)
         await axios.post("http://localhost:8000/api/user/forgot_password",{
           email:values.email,
         })
         .then((res)=>{
+          setLoading(false)
           console.log(res);
           toast.success("please chack your email and add the new password", {
             position: "top-right",
@@ -28,7 +29,8 @@ const ForgotPassword = () => {
             });
         })
         .catch((err)=>{
-          console.log(err);
+          setLoading(false)
+          console.log(err.response.data);
           let errorMessage=err.response.data.message
           toast.error(errorMessage, {
             position: "top-right",
@@ -44,7 +46,7 @@ const ForgotPassword = () => {
       }
       const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
-        // setLoading(false)
+        setLoading(false)
       };
 
 
